@@ -17,9 +17,9 @@ check if input is a proper number
 '''
 def invalid_number(num):
     try:
-        int(num)
+        float(num)
     except(ValueError):
-        prompt('invalid input')
+        prompt(get_message('errorvalidnumber'))
         return True
     
     return False
@@ -43,21 +43,21 @@ while True:
     prompt(get_message('prompt1'))
     num1 = input()
     while invalid_number(num1):
-        prompt('Enter a number')
+        prompt(get_message('enter'))
         num1 = input()
 
     prompt(get_message('prompt2'))
     num2 = input()
     while invalid_number(num2):
-        prompt('Enter a number')
+        prompt(get_message('enter'))
         num2 = input()
         
 
-    prompt("What is the operation you woulf like to perform? \n 1) Add 2) Subtract 3) Multiply 4) Divide")
+    prompt(get_message('operationprompt'))
 
     operation = input()
     while operation not in ['1', '2', '3', '4']:
-        prompt('You must choose 1, 2, 3, or 4. \n1) Add 2) Subtract 3) Multiply 4) Divide')
+        prompt(get_message('erroroperation'))
         operation = input()
     '''
 
@@ -74,19 +74,22 @@ while True:
     output = 0
     match operation:
         case '1':
-            output = int(num1) + int(num2)
+            output = float(num1) + float(num2)
         case '2':
-            output = int(num1) - int(num2)
+            output = float(num1) - float(num2)
         case '3':
-            output = int(num1) * int(num2)
+            output = float(num1) * float(num2)
         case '4':
-            output = int(num1) / int(num2)
+            output = float(num1) / float(num2)
 
-    prompt(f'The result is {output}')
-    prompt('Would you like to make another calculation? (yes(y)/no(n)')
+    prompt(get_message('results'))
+    prompt(output)
+    prompt(get_message('againprompt'))
+
+    
     choice = input()
     while choice.lower() not in ['y', 'n']:
-        prompt('Please enter a valid choice.')
+        prompt(get_message('errorvalidchoice'))
         choice = input()
     
     if choice.lower() in 'n':
