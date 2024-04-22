@@ -1,0 +1,14 @@
+{
+    "en" : {
+        "welcome" : "Welcome to calculator",
+        "prompt1" : "What's the first number?",
+        "prompt2" : "What's the second number?",
+        "enter" : "Enter a number",
+        "operationprompt" : "What is the operation you woulf like to perform? \n 1) Add 2) Subtract 3) Multiply 4) Divide",
+        "erroroperation" : "You must choose 1, 2, 3, or 4. \n1) Add 2) Subtract 3) Multiply 4) Divide",
+        "results" : "The result is {output}",
+        "againprompt" : "Would you like to make another calculation? (yes(y)/no(n)",
+        "errorvalidchoice" : "Please enter a valid choice.",
+        "errorvalidnumber" : "invalid input"
+        } 
+}
