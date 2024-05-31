@@ -15,36 +15,72 @@ Our version of the game lets the user play against the computer. The game flow s
 '''
 import random
 
-VALID_CHOICES = ['rock', 'paper', 'scissors']
+VALID_CHOICES = ['rock', 'paper', 'scissors', 'lizard', 'spock']
+p_wins, c_wins = 0, 0 
+
 
 def display_winner(choice, computer_choice):
-    if ((choice == "rock" and computer_choice == "scissors") or
-        (choice == "paper" and computer_choice == "rock") or
-        (choice == "scissors" and computer_choice == "paper")):
+    if ((choice == "rock" and (computer_choice == "scissors" or computer_choice == "lizard")) or
+        (choice == "paper" and (computer_choice == "rock" or computer_choice == "spock")) or
+        (choice == "scissors" and (computer_choice == "paper" or computer_choice == "lizard")) or
+        (choice == "lizard" and (computer_choice == "spock" or computer_choice == "paper")) or
+        (choice == "spock" and (computer_choice == "scissor" or computer_choice == "rock"))):
         prompt("You win!")
-    elif ((choice == "rock" and computer_choice == "paper") or
-          (choice == "paper" and computer_choice == "scissors") or
-          (choice == "scissors" and computer_choice == "rock")):
-        prompt("Computer wins!")
+    elif ((computer_choice == "rock" and (choice == "scissors" or choice == "lizard")) or
+        (computer_choice == "paper" and (choice == "rock" or choice == "spock")) or
+        (computer_choice == "scissors" and (choice == "paper" or choice == "lizard")) or
+        (computer_choice == "lizard" and (choice == "spock" or choice == "paper")) or
+        (computer_choice == "spock" and (choice == "scissor" or choice == "rock"))):
+        prompt("You lose!")
     else:
         prompt("It's a tie!")
 
 def prompt(message):
   print(f'==> {message}')
+
+def getPlayerChoice():
+    def getPlayerInput():
+        player_input = input()
+        match player_input.lower():
+            case 'scissor' | 'sc' | 'sci' | 'scis':
+                player_input = 'scissors'
+            case 'spock' | 'sp' | 'spco' | 'spoc' | 'spok':
+                player_input = 'spock'
+            case  'lizard' | 'l' | 'liz' | 'lizd':
+                player_input = 'lizard'
+            case  'rock' | 'r' | 'ro' | 'rock' | 'roc' | 'rok':
+                player_input = 'rock'
+            case  'paper' | 'p' | 'pa' | 'pap' | 'pape':
+                player_input = 'paper'
+            case _:
+                prompt("invalid")
+                player_input= 'n/a'
+
+        return player_input
+
+    player_choice = getPlayerInput()
+    
+    while player_choice == 'n/a':
+        player_choice = getPlayerInput()
+
+    return player_choice
+
+
+    # while player_choice not in VALID_CHOICES:
+    #   prompt('That is not a valid choice')
+    #   player_choice = input()
+
+    # return player_choice
   
 while True:
     prompt(f'Choose one: {", ".join(VALID_CHOICES)}')
-    choice = input()
-
-    while choice not in VALID_CHOICES:
-      prompt('That is not a valid choice')
-      choice = input()
+    choice = getPlayerChoice()
 
     computer_choice = random.choice(VALID_CHOICES)
     prompt(f"You chose {choice}, computer chose {computer_choice}")
 
     display_winner(choice, computer_choice)
-    #is display winner returns a string, i can print that string instead.
+    #if display winner returns a string, i can print that string instead.
 
     prompt("Do you want to play again (y/n)?")
     answer = input().lower()
