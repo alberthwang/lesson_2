@@ -16,7 +16,7 @@ Our version of the game lets the user play against the computer. The game flow s
 import random
 
 VALID_CHOICES = ['rock', 'paper', 'scissors', 'lizard', 'spock']
-p_wins, c_wins = 0, 0 
+player_wins, computer_wins, game_number = 0, 0, 1 
 
 
 def display_winner(choice, computer_choice):
@@ -25,15 +25,15 @@ def display_winner(choice, computer_choice):
         (choice == "scissors" and (computer_choice == "paper" or computer_choice == "lizard")) or
         (choice == "lizard" and (computer_choice == "spock" or computer_choice == "paper")) or
         (choice == "spock" and (computer_choice == "scissor" or computer_choice == "rock"))):
-        prompt("You win!")
+        return "You win!"
     elif ((computer_choice == "rock" and (choice == "scissors" or choice == "lizard")) or
         (computer_choice == "paper" and (choice == "rock" or choice == "spock")) or
         (computer_choice == "scissors" and (choice == "paper" or choice == "lizard")) or
         (computer_choice == "lizard" and (choice == "spock" or choice == "paper")) or
         (computer_choice == "spock" and (choice == "scissor" or choice == "rock"))):
-        prompt("You lose!")
+        return "You lose!"
     else:
-        prompt("It's a tie!")
+        return "It's a tie!"
 
 def prompt(message):
   print(f'==> {message}')
@@ -41,22 +41,25 @@ def prompt(message):
 def getPlayerChoice():
     def getPlayerInput():
         player_input = input()
-        match player_input.lower():
-            case 'scissor' | 'sc' | 'sci' | 'scis':
-                player_input = 'scissors'
-            case 'spock' | 'sp' | 'spco' | 'spoc' | 'spok':
-                player_input = 'spock'
-            case  'lizard' | 'l' | 'liz' | 'lizd':
-                player_input = 'lizard'
-            case  'rock' | 'r' | 'ro' | 'rock' | 'roc' | 'rok':
-                player_input = 'rock'
-            case  'paper' | 'p' | 'pa' | 'pap' | 'pape':
-                player_input = 'paper'
-            case _:
-                prompt("invalid")
-                player_input= 'n/a'
+        if player_input in VALID_CHOICES:
+            return player_input
+        else:
+            match player_input.lower():
+                case 'scissor' | 'sc' | 'sci' | 'scis':
+                    player_input = 'scissors'
+                case 'sspock' | 'sp' | 'spco' | 'spoc' | 'spok':
+                    player_input = 'spock'
+                case  'llizard' | 'l' | 'liz' | 'lizd':
+                    player_input = 'lizard'
+                case  'rrock' | 'r' | 'ro' | 'rock' | 'roc' | 'rok':
+                    player_input = 'rock'
+                case  'ppaper' | 'p' | 'pa' | 'pap' | 'pape':
+                    player_input = 'paper'
+                case _:
+                    prompt("invalid")
+                    player_input= 'n/a'
 
-        return player_input
+            return player_input
 
     player_choice = getPlayerInput()
     
@@ -72,24 +75,41 @@ def getPlayerChoice():
 
     # return player_choice
   
-while True:
+while (player_wins < 3 and computer_wins < 3):
+    winner = ''
+    prompt(f'GAME {game_number}')
+    prompt(f'Player wins: {player_wins}, Computer wins: {computer_wins}')
     prompt(f'Choose one: {", ".join(VALID_CHOICES)}')
     choice = getPlayerChoice()
 
     computer_choice = random.choice(VALID_CHOICES)
     prompt(f"You chose {choice}, computer chose {computer_choice}")
 
-    display_winner(choice, computer_choice)
+    winner = display_winner(choice, computer_choice)
     #if display winner returns a string, i can print that string instead.
 
-    prompt("Do you want to play again (y/n)?")
-    answer = input().lower()
-    while True:
-        if answer.startswith('n') or answer.startswith('y'):
-            break
-        
-        prompt('Please enter "y" or "n".')
-        answer = input().lower()
+    if 'win' in winner:
+        prompt(winner)
+        player_wins += 1
+        game_number += 1
+    elif 'lose' in winner:
+        prompt(winner)
+        computer_wins += 1
+        game_number += 1
+    else:
+        prompt(winner)
+        game_number += 1
 
-    if answer[0] == 'n':
-        break
+prompt(f'Final Score: Player wins: {player_wins}, Computer wins: {computer_wins}')
+
+    # prompt("Do you want to play again (y/n)?")
+    # answer = input().lower()
+    # # while True:
+    # #     if answer.startswith('n') or answer.startswith('y'):
+    # #         break
+        
+    # #     prompt('Please enter "y" or "n".')
+    # #     answer = input().lower()
+
+    # if answer[0] == 'n':
+    #     break
